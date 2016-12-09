@@ -1,6 +1,6 @@
  (function(){
 	'use strict';
-	
+
 	// Key codes
 	var keys = {
 		enter : 13,
@@ -13,17 +13,17 @@
 	.module('thatisuday.ng-image-gallery', ['ngAnimate'])
 	.provider('ngImageGalleryOpts', function(){
 		var defOpts = {
-			thumbnails  :   true,   
+			thumbnails  :   true,
 			inline      :   false,
 			bubbles     :   true,
-			imgBubbles  :   false,   
+			imgBubbles  :   false,
 			bgClose     :   false,
 			imgAnim 	: 	'fadeup',
 		};
 
 		return{
 			setOpts : function(newOpts){
-				angular.extend(defOpts, newOpts); 
+				angular.extend(defOpts, newOpts);
 			},
 			$get : function(){
 				return defOpts;
@@ -52,7 +52,7 @@
 				onClose 		: 	'&?'		// function
 			},
 			template : 	'<div class="ng-image-gallery img-move-dir-{{imgMoveDirection}}" ng-class="{inline:inline}">'+
-							
+
 							// Thumbnails container
 							//  Hide for inline gallery
 							'<div ng-if="thumbnails && !inline" class="ng-image-gallery-thumbnails">'+
@@ -62,15 +62,15 @@
 							// Modal container
 							// (inline container for inline modal)
 							'<div class="ng-image-gallery-modal" ng-show="opened" ng-cloak>' +
-								
+
 								// Gallery backdrop container
 								// (hide for inline gallery)
 								'<div class="ng-image-gallery-backdrop" ng-if="!inline"></div>'+
-								
+
 								// Gallery contents container
 								// (hide when image is loading)
 								'<div class="ng-image-gallery-content" ng-show="!imgLoading" ng-click="backgroundClose($event);">'+
-									
+
 									// destroy icons container
 									'<div class="destroy-icons-container">'+
 										// External link icon
@@ -87,7 +87,7 @@
 
 									// Galleria container
 									'<div class="galleria">'+
-										
+
 										// Images container
 										'<div class="galleria-images img-anim-{{imgAnim}} img-move-dir-{{imgMoveDirection}}">'+
 											'<img class="galleria-image" ng-repeat="image in images" ng-if="activeImg == image" ng-src="{{image.url}}" ondragstart="return false;" oncontextmenu="return false;" ng-attr-title="{{image.title || undefined}}" ng-attr-alt="{{image.alt || undefined}}"/>'+
@@ -106,7 +106,7 @@
 									'</div>'+
 
 								'</div>'+
-								
+
 								// Loading animation overlay container
 								// (show when image is loading)
 								'<div class="ng-image-gallery-loader" ng-show="imgLoading">'+
@@ -120,9 +120,9 @@
 								'</div>'+
 							'</div>'+
 						'</div>',
-						
+
 			link : function(scope, elem, attr){
-				
+
 				/*
 				 *	Operational functions
 				**/
@@ -139,7 +139,7 @@
 
 				// Image load complete promise
 				scope.loadImg = function(imgObj){
-					
+
 					// Return rejected promise
 					// if not image object received
 					if(!imgObj) return $q.reject();
@@ -153,12 +153,25 @@
 					var img = new Image();
 					img.src = imgObj.url;
 					img.onload = function(){
+            console.log("success")
 						// Hide loder
 						if(!imgObj.hasOwnProperty('cached')) scope.hideLoader();
 
 						// Cache image
 						if(!imgObj.hasOwnProperty('cached')) imgObj.cached = true;
 
+						return deferred.resolve(imgObj);
+					}
+
+          img.onerror = function(){
+            console.log("error")
+						// Hide loder
+            scope.hideLoader();
+						// Cache image
+            imgObj.cached = false;
+            imgObj.url = 'http://contartec.com.br/assets/img/image_not_found.png';
+            console.log("set not found")
+            console.log(imgObj)
 						return deferred.resolve(imgObj);
 					}
 
@@ -170,10 +183,10 @@
 					if(
 						scope.images.indexOf(scope.activeImg) - scope.images.indexOf(imgObj) == (scope.images.length - 1) ||
 						(
-							scope.images.indexOf(scope.activeImg) - scope.images.indexOf(imgObj) <= 0 && 
+							scope.images.indexOf(scope.activeImg) - scope.images.indexOf(imgObj) <= 0 &&
 							scope.images.indexOf(scope.activeImg) - scope.images.indexOf(imgObj) != -(scope.images.length - 1)
 						)
-						
+
 					){
 						scope.imgMoveDirection = 'forward';
 					}
@@ -189,7 +202,7 @@
 
 
 				/***************************************************/
-				
+
 
 				/*
 				 *	Gallery settings
@@ -212,7 +225,7 @@
 
 				scope.onOpen 	 	 = 	(scope.onOpen 		!= undefined) ? scope.onOpen 	 : 	angular.noop;
 				scope.onClose 	 	 = 	(scope.onClose 		!= undefined) ? scope.onClose 	 : 	angular.noop;
-				
+
 				// If images populate dynamically, reset gallery
 				var imagesFirstWatch = true;
 				scope.$watch('images', function(){
@@ -244,7 +257,7 @@
 						if(scope.inline) scope.methods.open();
 					});
 				});
-				
+
 
 				/***************************************************/
 
@@ -388,11 +401,11 @@
 				/*
 				 *	Actions on angular events
 				**/
-				
+
 				var removeClassFromDocumentBody = function(){
 					angular.element(document.body).removeClass('body-overflow-hidden');
 				};
-				
+
 				$rootScope.$on('$stateChangeSuccess', removeClassFromDocumentBody);
 				$rootScope.$on('$routeChangeSuccess ', removeClassFromDocumentBody);
 
