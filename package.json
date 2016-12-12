@@ -1,6 +1,6 @@
 {
   "name": "ng-image-gallery",
-  "version": "v2.0.8",
+  "version": "v2.0.10",
   "description": "Probably the best angular inline and modal image gallery combined...",
   "main": "dist/ng-image-gallery.js",
   "directories": {
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thatisuday/ng-image-gallery.git"
+    "url": "git+https://github.com/vcasadei/ng-image-gallery.git"
   },
   "author": "Uday Hiwarale <uhiwarale@gmail.com> (https://github.com/thatisuday)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/thatisuday/ng-image-gallery/issues"
+    "url": "https://github.com/vcasadei/ng-image-gallery/issues"
   },
-  "homepage": "https://github.com/thatisuday/ng-image-gallery#readme",
+  "homepage": "https://github.com/vcasadei/ng-image-gallery#readme",
   "devDependencies": {
     "chai": "^3.5.0",
     "gulp": "^3.9.1",
