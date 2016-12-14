@@ -233,7 +233,7 @@
 
        // If images populate dynamically, reset gallery
        var imagesFirstWatch = true;
-       scope.$watch('images', function(){
+       scope.$watchCollection('images', function(){
          if(imagesFirstWatch){
            imagesFirstWatch = false;
          }
@@ -245,7 +245,7 @@
        // Watch index of visible/active image
        // If index changes, make sure to load/change image
        var activeImageIndexFirstWatch = true;
-       scope.$watch('activeImageIndex', function(newImgIndex){
+       scope.$watchCollection('activeImageIndex', function(newImgIndex){
          if(activeImageIndexFirstWatch){
            activeImageIndexFirstWatch = false;
          }
